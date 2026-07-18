@@ -1,12 +1,10 @@
 <?php
 if ( ! defined( '_S_VERSION' ) ) {
-    // Replace the version number of the theme on each release.
-    define( '_S_VERSION', '1.0.0' );
+  define( '_S_VERSION', '1.0.0' );
 }
 
 if ( ! function_exists( 'theme_setup' ) ) :
   function theme_setup() {
-    // Add default posts and comments RSS feed links to head.
     add_theme_support( 'automatic-feed-links' );
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' );
@@ -15,50 +13,45 @@ endif;
 add_action( 'after_setup_theme', 'theme_setup' );
 
 /* Register menu */
-    function register_my_menu() {
-      register_nav_menu('header-menu',__( 'Header Menu' ));
-      register_nav_menu('footer-menu',__( 'Footer menu' ));
-    }
-    add_action( 'init', 'register_my_menu' );
-/* Register menu end */
+  function register_my_menu() {
+    register_nav_menu('header-menu',__( 'Header Menu' ));
+    register_nav_menu('footer-menu',__( 'Footer menu' ));
+  }
+  add_action( 'init', 'register_my_menu' );
 
 //Disable Gutenburg Editor
-    add_filter('use_block_editor_for_post', '__return_false', 10);
-//Disable Gutenburg Editor end
+  //add_filter('use_block_editor_for_post', '__return_false', 10);
 
 // support SVG
-    function cc_mime_types($mimes) {
-      $mimes['svg'] = 'image/svg+xml';
-      return $mimes;
-    }
-    add_filter('upload_mimes', 'cc_mime_types');
-// support SVG end
+  function cc_mime_types($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+  }
+  add_filter('upload_mimes', 'cc_mime_types');
 
 /* Convert to WEBP URL*/
-    function webpUrl($url) {
-      if($url && strpos($url, 'uploads') !== false){
-        $url = str_replace("uploads","uploads-webpc/uploads", $url);
-        $url = $url . '.webp';
-      }
-      return $url;
+  function webpUrl($url) {
+    if($url && strpos($url, 'uploads') !== false){
+      $url = str_replace("uploads","uploads-webpc/uploads", $url);
+      $url = $url . '.webp';
     }
-/* Convert to WEBP URL end*/
+    return $url;
+  }
 
 /* Enqueue scripts and styles.*/
 function theme_scripts() {
   // css
     wp_enqueue_style( 'theme-style', get_stylesheet_uri(), array(), _S_VERSION );
-    wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css');
-    wp_enqueue_style( 'custom-styles', get_template_directory_uri() . '/assets/css/style.min.css', array(), '1.0' );
-    wp_enqueue_style('slick-css', get_template_directory_uri() . '/assets/slick/css/slick.min.css', array(), '1.8.1');
-    wp_enqueue_style('slick-theme-css',  get_template_directory_uri() . '/assets/slick/css/slick-theme.min.css', array('slick-css'), '1.8.1');
-    wp_enqueue_style( 'additional-styles', get_template_directory_uri() . '/assets/custom/css/custom.css', array(), '1.0' );
+    wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '5.3.3' );
+    wp_enqueue_style( 'fancybox-css', get_template_directory_uri() . '/assets/css/jquery.fancybox.min.css', array(), '1.0' );
+    wp_enqueue_style( 'style-css', get_template_directory_uri() . '/assets/css/style.css', array(), '1.0' );
+    wp_enqueue_style( 'custom-css', get_template_directory_uri() . '/assets/css/custom.css', array(), '1.0' );
     wp_style_add_data( 'theme-style', 'rtl', 'replace' );
   // js
-    wp_enqueue_script('bootstrap-js',get_template_directory_uri() . '/assets/bootstrap/js/bootstrap.bundle.min.js',array('jquery'), _S_VERSION, true );
-    wp_enqueue_script( 'custom-js', get_template_directory_uri() . '/assets/js/main.min.js', array(), _S_VERSION, true );
-    wp_enqueue_script('slick-js', get_template_directory_uri() . '/assets/slick/js/slick.min.js', array('jquery'), '1.8.1', true);
-    wp_enqueue_script( 'additional-js', get_template_directory_uri() . '/assets/custom/js/custom.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'fancybox-js',get_template_directory_uri() . '/assets/js/jquery.fancybox.js',array('jquery'), _S_VERSION, true );
+    wp_enqueue_script( 'main-js', get_template_directory_uri() . '/assets/js/main.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'video-js', get_template_directory_uri() . '/assets/js/video-pagination.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'custom-js', get_template_directory_uri() . '/assets/js/custom.js', array(), _S_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'theme_scripts' );
 
@@ -66,45 +59,9 @@ add_action( 'wp_enqueue_scripts', 'theme_scripts' );
 add_filter('wpcf7_autop_or_not', '__return_false');
 
 // custom functions
-    require get_template_directory() . '/includes/custom.php';
-    require get_template_directory() . '/includes/image-sizes.php';
-// custom functions end
+  require get_template_directory() . '/includes/custom.php';
 
 // CPT
-    require get_template_directory() . '/includes/cpt/career.php';
-// CPT end
-
-// Remove editor for 'Page' and 'Expertises' custom post type
-  function remove_editor_for_event_cpt() {
-    remove_post_type_support( 'expertises', 'editor' );
-    remove_post_type_support( 'page', 'editor' );
-  }
-  add_action( 'init', 'remove_editor_for_event_cpt' );
-// end
-
-// Submenu wrapper 
-class Custom_Submenu_Walker extends Walker_Nav_Menu {
-  // Start the submenu
-  function start_lvl( &$output, $depth = 0, $args = null ) {
-    $indent = str_repeat("\t", $depth);
-    $submenu_class = ($depth > 0) ? 'sub-menu inner-sub-menu' : 'sub-menu';
-    // Only wrap the first submenu (depth 0)
-    if ($depth === 0) {
-      $output .= "\n$indent<div class=\"submenu-wrapper\"><div class=\"container\">\n";
-    }
-    $output .= "$indent<ul class=\"$submenu_class\">\n";
-  }
-  // End the submenu
-  function end_lvl( &$output, $depth = 0, $args = null ) {
-    $indent = str_repeat("\t", $depth);
-    $output .= "$indent</ul>\n";
-    if ($depth === 0) {
-      $output .= "$indent</div></div>\n";
-    }
-  }
-}
-// end
-
-
+  require get_template_directory() . '/includes/cpt/career.php';
 
 ?>
