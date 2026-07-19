@@ -1,0 +1,13 @@
+footer.site-footer .footer-about a {
+   border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+   --bs-border-opacity: 1;
+    border-color: rgba(var(--bs-secondary-rgb), var(--bs-border-opacity)) !important;
+    padding-bottom: .25rem !important;
+    text-decoration: none !important;
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+    transition: color 0.2s ease;
+}
+footer.site-footer .footer-about p {
+    margin-bottom: 1.5rem !important;
+}
