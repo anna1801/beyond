@@ -16,3 +16,9 @@ footer.site-footer .footer-about p {
     object-fit: cover;
     object-position: center;
 }
+h1, h2 {
+    letter-spacing: -2.5px;
+}
+.approach-icon {
+    padding: 15px;
+}

@@ -1,36 +1,70 @@
 <?php
-// Disable Gutenberg for multiple custom templates
-add_filter( 'use_block_editor_for_post', function( $use_block_editor, $post ) {
+/**
+ * Add custom font-weight formats to the WordPress WYSIWYG Editor
+ */
+function custom_tinymce_font_weight_formats($init_array) {
 
-    if ( ! $post ) {
-        return $use_block_editor;
-    }
+    $init_array['style_formats'] = json_encode(array(
+        array(
+            'title' => 'Font Weight',
+            'items' => array(
+                array(
+                    'title'    => 'Light (300)',
+                    'inline'   => 'span',
+                    'styles'   => array(
+                        'font-weight' => '300',
+                    ),
+                ),
+                array(
+                    'title'    => 'Regular (400)',
+                    'inline'   => 'span',
+                    'styles'   => array(
+                        'font-weight' => '400',
+                    ),
+                ),
+                array(
+                    'title'    => 'Medium (500)',
+                    'inline'   => 'span',
+                    'styles'   => array(
+                        'font-weight' => '500',
+                    ),
+                ),
+                array(
+                    'title'    => 'Semi Bold (600)',
+                    'inline'   => 'span',
+                    'styles'   => array(
+                        'font-weight' => '600',
+                    ),
+                ),
+                array(
+                    'title'    => 'Bold (700)',
+                    'inline'   => 'span',
+                    'styles'   => array(
+                        'font-weight' => '700',
+                    ),
+                ),
+                array(
+                    'title'    => 'Extra Bold (800)',
+                    'inline'   => 'span',
+                    'styles'   => array(
+                        'font-weight' => '800',
+                    ),
+                ),
+            ),
+        ),
+    ));
 
-    if (
-        $post->post_type === 'page' &&
-        (int) $post->ID === (int) get_option( 'page_on_front' )
-    ) {
-        return false;
-    }
+    return $init_array;
+}
+add_filter('tiny_mce_before_init', 'custom_tinymce_font_weight_formats');
 
-    $custom_templates = array(
-        'templates/landing-page.php',
-    );
+function custom_tinymce_buttons($buttons) {
+    array_unshift($buttons, 'styleselect');
+    return $buttons;
+}
+add_filter('mce_buttons', 'custom_tinymce_buttons');
 
-    if (
-        $post->post_type === 'page' &&
-        in_array(
-            get_page_template_slug( $post->ID ),
-            $custom_templates,
-            true
-        )
-    ) {
-        return false;
-    }
 
-    return $use_block_editor;
-
-}, 10, 2 );
 
 
 

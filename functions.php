@@ -22,7 +22,7 @@ add_action( 'after_setup_theme', 'theme_setup' );
   add_action( 'init', 'register_my_menu' );
 
 //Disable Gutenburg Editor
-  //add_filter('use_block_editor_for_post', '__return_false', 10);
+  add_filter('use_block_editor_for_post', '__return_false', 10);
 
 // support SVG
   function cc_mime_types($mimes) {
