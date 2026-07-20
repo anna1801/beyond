@@ -65,7 +65,4 @@ add_filter('wpcf7_autop_or_not', '__return_false');
   require get_template_directory() . '/includes/custom.php';
   require get_template_directory() . '/includes/nav_walker.php';
 
-// CPT
-  require get_template_directory() . '/includes/cpt/career.php';
-
 ?>

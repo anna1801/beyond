@@ -11,3 +11,8 @@ footer.site-footer .footer-about a {
 footer.site-footer .footer-about p {
     margin-bottom: 1.5rem !important;
 }
+.box-image {
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+}
