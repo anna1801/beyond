@@ -52,6 +52,18 @@ function custom_tinymce_font_weight_formats($init_array) {
                 ),
             ),
         ),
+
+        array(
+            'title' => 'Button',
+            'items' => array(
+                array(
+                    'title'   => 'Default Button',
+                    'selector' => 'a',
+                    'classes' => 'btn btn-news rounded-pill px-4 py-2 fw-bold text-uppercase small',
+                ),
+            ),
+        ),
+
     ));
 
     return $init_array;
