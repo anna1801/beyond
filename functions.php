@@ -31,6 +31,21 @@ add_action( 'after_setup_theme', 'theme_setup' );
   }
   add_filter('upload_mimes', 'cc_mime_types');
 
+  function cc_check_filetype_and_ext($data, $file, $filename, $mimes) {
+      $filetype = wp_check_filetype($filename, $mimes);
+      if ($filetype['ext'] === 'svg') {
+        $data['ext']  = 'svg';
+        $data['type'] = 'image/svg+xml';
+      }
+      return $data;
+  }
+  add_filter(
+      'wp_check_filetype_and_ext',
+      'cc_check_filetype_and_ext',
+      10,
+      4
+  );
+
 /* Convert to WEBP URL*/
   function webpUrl($url) {
     if($url && strpos($url, 'uploads') !== false){
