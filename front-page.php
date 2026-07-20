@@ -429,8 +429,8 @@ get_header();
                                             $post_permalink = get_permalink();
                                             $post_excerpt = get_the_excerpt();
                                             $topic = get_the_terms(get_the_ID(), 'topic');
-                                            if (has_post_thumbnail($post->ID)) {
-                                                $image = get_the_post_thumbnail_url($post->ID, 'full');
+                                            if (has_post_thumbnail(get_the_ID())) {
+                                                $image = get_the_post_thumbnail_url(get_the_ID(), 'full');
                                             } else {
                                                 $image = get_template_directory_uri() . '/assets/images/placeholder.png';
                                             }
@@ -458,177 +458,298 @@ get_header();
         endif;
     ?>
 
-
-
-    
-
-
-
-
-   
-
-        <section class="section-padding mt-5 mb-5 photo-essay-section">
-            <div class="container">
-                <div class="mb-4">
-                    <h3 class="fw-bold title-hover-effect">Photo Essay</h3>
-                </div>
-                
-                <div class="row g-4 mb-5 flex-nowrap-mobile" id="photoEssayTabs">
-                    <?php 
-                        $photoargs = array(
-                            'post_type' => 'photo-essays',
-                            'posts_per_page' => 5,
-                            'orderby' => 'date',
-                            'order' => 'DESC',
-                            'post_status' => 'publish',
-                        ); 
-                        $photo_posts = new WP_Query($photoargs);
-                        if ($photo_posts->have_posts()) :
-                            while ($photo_posts->have_posts()) : $photo_posts->the_post();
-                                $post_title = get_the_title();
-                                $post_excerpt = get_the_excerpt();
-                                ?>
-                                <div class="col-lg col-md-6">
-                                    <div class="strategy-tab active" data-slide="0">
-                                        <h4><?php echo esc_attr($post_title); ?></h4>
-                                        <p><?php echo esc_html($post_excerpt); ?></p>
-                                    </div>
-                                </div>
-                                <?php
-                            endwhile;
-                            wp_reset_postdata();
-                        endif;
-                    ?>
-                </div>
-                
-
-
-
-
-
-                <div class="photo-essay-container position-relative">
-                    <!-- Navigation Arrows -->
-                    <button class="essay-arrow essay-prev" id="essayPrev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="essay-arrow essay-next" id="essayNext"><i class="fas fa-chevron-right"></i></button>
-                    <!-- Added arrows for "js help" manual control if needed, but tabs work too -->
-                    <!-- Scroll Area -->
-                    <div class="photo-essay-scroll d-flex" id="photoEssayScroll">
-                        <!-- Slide 1 -->
-                        <div class="photo-essay-slide">
-                            <div class="strategy-content-box p-0 overflow-hidden h-100">
-                                <div class="row g-0 align-items-center h-100">
-                                    <div class="col-lg-7 position-relative h-100">
-                                        <img src="images/banner1.jpg"
-                                            class="img-fluid object-fit-cover img-hover-effect"
-                                            alt="Whispers of the Wetlands" loading="lazy">
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="p-5">
-                                            <h3 class="fw-bold mb-3 title-hover-effect">Whispers of the Wetlands</h3>
-                                            <p class="mb-4 lead">Explore the delicate ecosystem of India's Sundarbans
-                                                mangroves, their biodiversity, and the environmental challenges they
-                                                face from rising sea levels.
-                                            </p>
-                                            <a href="photo-essay-inner.html" class="read-story-link">Read The Story <i
-                                                    class="fas fa-chevron-right ms-1 small"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <?php
+        $photo_essay_show_hide = get_field('photo_essay_show_hide');
+        if ($photo_essay_show_hide) :
+            $photo_essay_title = get_field('photo_essay_title');
+            $photo_essay_number = get_field('photo_essay_number');
+            if($photo_essay_number) {
+                $photo_essay_number = $photo_essay_number;
+            } else {
+                $photo_essay_number = 5;
+            }
+            ?>
+            <section class="section-padding mt-5 mb-5 photo-essay-section">
+                <div class="container">
+                    <?php if($photo_essay_title) : ?>
+                        <div class="mb-4">
+                            <h3 class="fw-bold title-hover-effect"><?php echo esc_html($photo_essay_title); ?></h3>
                         </div>
-                        <!-- Slide 2 -->
-                        <div class="photo-essay-slide">
-                            <div class="strategy-content-box p-0 overflow-hidden h-100">
-                                <div class="row g-0 align-items-center h-100">
-                                    <div class="col-lg-7 position-relative h-100">
-                                        <img src="images/banner2.jpg"
-                                            class="img-fluid object-fit-cover img-hover-effect" alt="Trend Ideas"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="p-5">
-                                            <h3 class="fw-bold mb-3 title-hover-effect">Intermediate trend ideas</h3>
-                                            <p class="mb-4 lead">Seamlessly reintermediate
-                                                integrated potentials through technically sound intellectual capital.
-                                                Holistically foster superior methodologies.</p>
-                                            <a href="#" class="read-story-link">Read The Story <i
-                                                    class="fas fa-chevron-right ms-1 small"></i></a>
+                    <?php endif; ?>
+                    <div class="row g-4 mb-5 flex-nowrap-mobile" id="photoEssayTabs">
+                        <?php 
+                            $photonavargs = array(
+                                'post_type' => 'photo-essays',
+                                'posts_per_page' => $photo_essay_number,
+                                'orderby' => 'date',
+                                'order' => 'DESC',
+                                'post_status' => 'publish',
+                            ); 
+                            $photonav_posts = new WP_Query($photonavargs);
+                            if ($photonav_posts->have_posts()) :
+                                while ($photonav_posts->have_posts()) : $photonav_posts->the_post();
+                                    $post_title = get_the_title();
+                                    $post_excerpt = get_the_excerpt();
+                                    ?>
+                                    <div class="col-lg col-md-6">
+                                        <div class="strategy-tab <?php echo esc_attr($photonav_posts->current_post === 0 ? 'active' : ''); ?>" data-slide="<?php echo esc_attr($photonav_posts->current_post); ?>">
+                                            <h4><?php echo esc_attr($post_title); ?></h4>
+                                            <p><?php echo esc_html($post_excerpt); ?></p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="photo-essay-slide">
-                            <div class="strategy-content-box p-0 overflow-hidden h-100">
-                                <div class="row g-0 align-items-center h-100">
-                                    <div class="col-lg-7 position-relative h-100">
-                                        <img src="images/banner3.jpg"
-                                            class="img-fluid object-fit-cover img-hover-effect" alt="Proactive Vision"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="p-5">
-                                            <h3 class="fw-bold mb-3 title-hover-effect">Proactively envisioned</h3>
-                                            <p class="mb-4 lead">Iterative approaches to
-                                                corporate strategy foster collaborative thinking to further the overall
-                                                value proposition.</p>
-                                            <a href="#" class="read-story-link">Read The Story <i
-                                                    class="fas fa-chevron-right ms-1 small"></i></a>
+                                    <?php
+                                endwhile;
+                                wp_reset_postdata();
+                            endif;
+                        ?>
+                    </div>
+                    <div class="photo-essay-container position-relative">
+                        <button class="essay-arrow essay-prev" id="essayPrev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="essay-arrow essay-next" id="essayNext"><i class="fas fa-chevron-right"></i></button>
+                        <div class="photo-essay-scroll d-flex" id="photoEssayScroll">
+                            <?php 
+                                $photoargs = array(
+                                    'post_type' => 'photo-essays',
+                                    'posts_per_page' => $photo_essay_number,
+                                    'orderby' => 'date',
+                                    'order' => 'DESC',
+                                    'post_status' => 'publish',
+                                ); 
+                                $photo_posts = new WP_Query($photoargs);
+                                if ($photo_posts->have_posts()) :
+                                    while ($photo_posts->have_posts()) : $photo_posts->the_post();
+                                        $post_title = get_the_title();
+                                        $post_content = wp_trim_words(get_the_content(), 10, '...');
+                                        if (has_post_thumbnail(get_the_ID())) {
+                                            $image = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                                        } else {
+                                            $image = get_template_directory_uri() . '/assets/images/placeholder.png';
+                                        }
+                                        ?>
+                                        <div class="photo-essay-slide">
+                                            <div class="strategy-content-box p-0 overflow-hidden h-100">
+                                                <div class="row g-0 align-items-center h-100">
+                                                    <div class="col-lg-7 position-relative h-100">
+                                                        <img src="<?php echo esc_url($image); ?>"
+                                                            class="img-fluid h-100 object-fit-cover img-hover-effect"
+                                                            alt="<?php echo esc_attr($post_title); ?>" loading="lazy">
+                                                    </div>
+                                                    <div class="col-lg-5">
+                                                        <div class="p-5">
+                                                            <h3 class="fw-bold mb-3 title-hover-effect"><?php echo esc_html($post_title); ?></h3>
+                                                            <p class="mb-4 lead"><?php echo $post_content; ?></p>
+                                                            <a href="<?php the_permalink(); ?>" class="read-story-link">Read The Story <i
+                                                                    class="fas fa-chevron-right ms-1 small"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 4 -->
-                        <div class="photo-essay-slide">
-                            <div class="strategy-content-box p-0 overflow-hidden h-100">
-                                <div class="row g-0 align-items-center h-100">
-                                    <div class="col-lg-7 position-relative h-100">
-                                        <img src="images/banner4.jpg"
-                                            class="img-fluid object-fit-cover img-hover-effect" alt="Resource Synergy"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="p-5">
-                                            <h3 class="fw-bold mb-3 title-hover-effect">Synergize resource</h3>
-                                            <p class="mb-4 lead">Organically grow the holistic
-                                                world view of disruptive innovation via workplace diversity and
-                                                empowerment.</p>
-                                            <a href="#" class="read-story-link">Read The Story <i
-                                                    class="fas fa-chevron-right ms-1 small"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slide 5 -->
-                        <div class="photo-essay-slide">
-                            <div class="strategy-content-box p-0 overflow-hidden h-100">
-                                <div class="row g-0 align-items-center h-100">
-                                    <div class="col-lg-7 position-relative h-100">
-                                        <img src="https://fastly.picsum.photos/id/54/800/500.jpg?hmac=cKc4nBhvekkZCcj3sDJy5Zg7N4O1D_-F6Qvu1eivRog"
-                                            class="img-fluid object-fit-cover img-hover-effect" alt="Essay 5">
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="p-5">
-                                            <h3 class="fw-bold mb-3 title-hover-effect">Dynamically innovate</h3>
-                                            <p class="mb-4 lead">Empower experienced supply
-                                                chains with customer-directed meta-services.</p>
-                                            <a href="#" class="read-story-link">Read The Story <i
-                                                    class="fas fa-chevron-right ms-1 small"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        <?php
+                                    endwhile;
+                                    wp_reset_postdata();
+                                endif;
+                            ?>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <?php 
+        endif; 
+    ?>
+
+    <?php
+        $random_show_hide = get_field('random_show_hide');
+        if ($random_show_hide) :
+            $random_cta = get_field('random_cta'); 
+            $random_number = get_field('random_number');
+            if($random_number) {
+                $random_number = $random_number;
+            } else {
+                $random_number = 12;
+            }
+            ?>
+            <section class="section-padding">
+                <div class="container">
+                    <div class="row">
+                        <?php
+                            $latestargs = array(
+                                'post_type' => 'post',
+                                'posts_per_page' => $random_number,
+                                'orderby' => 'rand',
+                                'post_status' => 'publish',
+                            );
+                            $latest_posts = new WP_Query($latestargs);
+                            if($latest_posts->have_posts()) :
+                                while($latest_posts->have_posts()) : $latest_posts->the_post();
+                                    $post_id = get_the_ID();
+                                    $post_title = get_the_title();
+                                    $post_excerpt = get_the_excerpt();
+                                    $post_permalink = get_permalink();
+                                    $topic = get_the_terms($post_id, 'topic');
+                                    ?>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                                        <div class="card border-0">
+                                            <?php
+                                                if(has_post_thumbnail()) {
+                                                    $post_thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                                                } else {
+                                                    $post_thumbnail = get_template_directory_uri() . '/assets/images/placeholder.png';
+                                                }
+                                            ?>
+                                            <div class="article-card mb-3">
+                                                <img src="<?php echo esc_url($post_thumbnail); ?>" class="img-hover-effect box-image" alt="<?php echo esc_attr($post_title); ?>" loading="lazy">
+                                            </div>
+                                            <div class="card-body px-3 py-0">
+                                                <?php if($topic) : ?>
+                                                    <span class="text-uppercase small category_color mb-2 d-block ls-1"><?php echo esc_html($topic[0]->name); ?></span>
+                                                <?php endif; ?>
+                                                <h4 class="card-title fw-bold h5 mb-3">
+                                                    <a href="<?php echo esc_url($post_permalink); ?>" class="text-dark text-decoration-none title-hover-effect"><?php echo esc_html($post_title); ?></a>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                endwhile;
+                                wp_reset_postdata();
+                            endif;
+                        ?>  
+                        <?php if($random_cta) : ?>
+                            <div class="text-center">
+                                <a href="<?php echo esc_url($random_cta['url']); ?>" target="<?php echo esc_attr($random_cta['target']); ?>"  class="btn btn-outline-dark rounded-pill px-4 py-2 mt-5" style="font-size: 0.9rem; letter-spacing: 1px;">
+                                    <?php echo esc_html($random_cta['title']); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </section>
+            <?php
+        endif;
+    ?>
+
+    <?php 
+        $podcast_show_hide = get_field('podcast_show_hide');
+        if ($podcast_show_hide) :
+            $podcast_carousel_title = get_field('podcast_carousel_title');
+            $podcast_number = get_field('podcast_number');
+            if($podcast_number) {
+                $podcast_number = $podcast_number;
+            } else {
+                $podcast_number = 6;
+            }
+            ?>
+            <section class="our-news-digest mb-5">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                        <?php 
+                            if($podcast_carousel_title) :
+                                echo'<div class="d-flex align-items-center gap-2">
+                                        <span class="our-digest-icon text-muted"><i class="fas fa-podcast"></i></span>
+                                        <h4 class="our-digest-title h5 mb-0 fw-bold">' . esc_html($podcast_carousel_title) . '</h4>
+                                    </div>';
+                            endif;
+                        ?>
+                        <div class="d-flex gap-2">
+                            <button class="our-scroll-btn" id="podcastScrollLeft"><i class="fas fa-chevron-left"></i></button>
+                            <button class="our-scroll-btn" id="podcastScrollRight"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="our-digest-scroll-container">
+                        <div class="our-digest-scroll" id="podcastScroll">
+                            <?php 
+                                $podcastsargs = array(
+                                    'post_type' => 'podcasts',
+                                    'posts_per_page' => $podcast_number,
+                                    'orderby' => 'date',
+                                    'order' => 'DESC',
+                                    'post_status' => 'publish',
+                                ); 
+                                $podcast_posts = new WP_Query($podcastsargs);
+                                if ($podcast_posts->have_posts()) :
+                                    while ($podcast_posts->have_posts()) : $podcast_posts->the_post();
+                                        $post_title = get_the_title();
+                                        $topic = get_the_terms(get_the_ID(), 'topic');
+                                        if (has_post_thumbnail(get_the_ID())) {
+                                            $image = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                                        } else {
+                                            $image = get_template_directory_uri() . '/assets/images/icon.png';
+                                        }
+                                        ?>
+                                        <div class="podcast-card">
+                                            <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($post_title); ?>" class="podcast-img img-hover-effect" loading="lazy">
+                                            <div class="podcast-content">
+                                                <?php if($topic) : ?>
+                                                    <span class="our-card-category"><?php echo esc_html($topic[0]->name); ?></span>
+                                                <?php endif; ?>
+                                                <h4 class="our-card-title">
+                                                    <a href="<?php the_permalink(); ?>" class="text-decoration-none text-dark title-hover-effect">
+                                                        <?php echo esc_html($post_title); ?>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    endwhile;
+                                    wp_reset_postdata();
+                                endif;
+                            ?>  
+                        </div>
+                        <!-- Fade Overlay -->
+                        <div class="our-digest-fade"></div>
+                    </div>
+                </div>
+            </section>
+            <?php
+        endif;
+    ?>
 
 
 
+
+    <?php 
+        $choose_topics = get_field('choose_topics');
+        if ($choose_topics) :
+            $topics_title = get_field('topics_title');
+            $topics_subtitle = get_field('topics_subtitle');
+            ?>
+            <section class="section-padding bg-light-v2">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <?php if($topics_title) : ?>
+                            <h2 class="fw-bold display-5"><?php echo esc_html($topics_title); ?></h2>
+                            <div class="mx-auto" style="width: 60px; height: 4px; background: var(--color-primary); border-radius: 10px; margin-bottom: 20px;"></div>
+                        <?php endif; ?>
+                        <?php if($topics_subtitle) : ?>
+                            <p class="text-muted lead"><?php echo esc_html($topics_subtitle); ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="row g-4 justify-content-center">
+                        <?php 
+                            foreach($choose_topics as $topic) :
+                                $topic_name = $topic->name;
+                                $topic_link = get_term_link($topic);
+                                $topic_icon = get_field('icon', 'topic_' . $topic->term_id);
+                                ?>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <a href="<?php echo esc_url($topic_link); ?>" class="topic-card-v2 card-green">
+                                        <div class="spotlight-glow"></div>
+                                        <?php if($topic_icon) : ?>
+                                            <img src="<?php echo esc_url($topic_icon['url']); ?>" alt="<?php echo esc_attr($topic_name); ?>" class="topic-icon-v2">
+                                        <?php endif; ?>
+                                        <h6 class="topic-title-v2"><?php echo esc_html($topic_name); ?></h6>
+                                    </a>
+                                </div>
+                                <?php
+                            endforeach;
+                        ?>
+                    </div>
+                </div>
+            </section>
+            <?php
+        endif;
+    ?>
 
 
 
