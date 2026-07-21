@@ -95,7 +95,9 @@
                                     ?>
                                     <img src="<?php echo esc_url($post_thumbnail); ?>" class="img-fluid w-100 img-hover-effect" alt="<?php echo esc_attr($post_title); ?>">
                                 </div>
-                                <span class="text-uppercase small category_color ls-1 d-block mb-1"><?php echo esc_html($topic[0]->name); ?></span>
+                                <?php if($topic) : ?>
+                                    <span class="text-uppercase small category_color ls-1 d-block mb-1"><?php echo esc_html($topic[0]->name); ?></span>
+                                <?php endif; ?>
                                 <h4 class="h6 fw-bold mb-0"><a href="<?php echo esc_url($post_permalink); ?>"
                                         class="text-dark text-decoration-none title-hover-effect"><?php echo esc_html($post_title); ?></a></h4>
                             </div>

@@ -6,20 +6,15 @@
 
 get_header(); ?>
 
-	<div id="primary" class="content-area">
-		<div id="content" class="site-content" role="main">
-		  <div class="errorpage container">
-			<div class="page-header">
-				<h2 class="page-title">Not Found</h2>
-			</div>
-
-			<div class="page-wrapper">
-				<div class="page-content">
-					<p>It looks like nothing was found at this location</p>
-				</div>
-			</div>
-		  </div>
-		</div>
-	</div>
+    <section class="container policy-container mt-5 error-404 not-found">
+        <div class="row justify-content-center pt-5 pb-5">
+            <div class="col-lg-10 col-xl-8 text-center">
+                <h1 class="display-4 fw-bold mb-4">Not Found</h1>
+                <div class="policy-content">
+                    <p>It looks like nothing was found at this location</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <?php get_footer(); ?>

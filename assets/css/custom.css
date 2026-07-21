@@ -16,7 +16,7 @@ footer.site-footer .footer-about p {
     object-fit: cover;
     object-position: center;
 }
-h1 {
+h1:not(.no-ls) {
     letter-spacing: -2.5px;
 }
 .approach-icon {
@@ -103,7 +103,8 @@ body.single-post .article-body-content .wp-caption {
     color: var(--color-primary);
     font-family: var(--font-heading);
 }
-.further-reading-section .card .img-fluid {
+.further-reading-section .card .img-fluid,
+.box-item .card img {
     height: 240px;
     object-fit: cover;
     object-position: center;

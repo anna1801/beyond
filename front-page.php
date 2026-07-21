@@ -320,7 +320,9 @@ get_header();
                                         $topic = get_the_terms(get_the_ID(), 'topic');
                                         ?>
                                         <div class="our-digest-card">
-                                            <span class="our-card-category"><?php echo esc_html($topic[0]->name); ?></span>
+                                            <?php if($topic): ?>
+                                                <span class="our-card-category"><?php echo esc_html($topic[0]->name); ?></span>
+                                            <?php endif; ?>
                                             <h4 class="our-card-title"><a href="<?php echo esc_url($post_permalink); ?>"
                                                     class="text-decoration-none text-dark title-hover-effect"><?php echo esc_html($post_title); ?></a></h4>
                                             <span class="our-card-date"><?php echo get_the_date(); ?></span>
