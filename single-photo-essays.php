@@ -120,11 +120,7 @@
                 </div>
             <?php endif; ?>
             <div class="mt-5 body-content">
-                <?php 
-                    while ( have_posts() ) : the_post();
-                        the_content();
-                    endwhile; 
-                ?>
+                <?php the_content(); ?>
             </div>
             <div class="share-section d-flex justify-content-between align-items-center mt-5">
                 <div class="d-flex gap-3">

@@ -91,13 +91,7 @@
             </div>
         </div>
         <div class="article-body-content body-content">
-
-            <?php 
-                while ( have_posts() ) : the_post();
-                    the_content();
-                endwhile; 
-            ?>
-
+            <?php the_content(); ?>
             <div class="author-bio-card">
                 <?php if($author_picture) : ?>
                     <img src="<?php echo esc_url($author_picture); ?>" alt="<?php echo esc_attr($author_name); ?>" class="author-avatar">

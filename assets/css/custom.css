@@ -103,3 +103,8 @@ body.single-post .article-body-content .wp-caption {
     color: var(--color-primary);
     font-family: var(--font-heading);
 }
+.further-reading-section .card .img-fluid {
+    height: 240px;
+    object-fit: cover;
+    object-position: center;
+}
