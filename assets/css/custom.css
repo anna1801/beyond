@@ -62,7 +62,7 @@ body.single-post .article-body-content blockquote h6 {
     zoom: 1.03;
 }
 body.single-post .article-body-content blockquote::before {
-    content: url('/wp-content/themes/beyond/assets/images/quote.svg');
+    content: url('../images/quote.svg');
     width: 40px;
     height: 40px;
     padding: 8px;
