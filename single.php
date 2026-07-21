@@ -90,9 +90,13 @@
                 <p class="mb-0 small text-muted"><?php echo esc_html($published_date); ?></p>
             </div>
         </div>
-        <div class="article-body-content">
+        <div class="article-body-content body-content">
 
-            <?php the_content(); ?>
+            <?php 
+                while ( have_posts() ) : the_post();
+                    the_content();
+                endwhile; 
+            ?>
 
             <div class="author-bio-card">
                 <?php if($author_picture) : ?>

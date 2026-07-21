@@ -494,7 +494,7 @@ get_header();
                                     <div class="col-lg col-md-6">
                                         <div class="strategy-tab <?php echo esc_attr($photonav_posts->current_post === 0 ? 'active' : ''); ?>" data-slide="<?php echo esc_attr($photonav_posts->current_post); ?>">
                                             <h4><?php echo esc_attr($post_title); ?></h4>
-                                            <p><?php echo esc_html($post_excerpt); ?></p>
+                                            <p><?php echo esc_html(wp_trim_words($post_excerpt, 9, '...')); ?></p>
                                         </div>
                                     </div>
                                     <?php
@@ -705,9 +705,6 @@ get_header();
         endif;
     ?>
 
-
-
-
     <?php 
         $choose_topics = get_field('choose_topics');
         if ($choose_topics) :
@@ -750,11 +747,5 @@ get_header();
             <?php
         endif;
     ?>
-
-
-
-       
-
-
 
 <?php get_footer(); ?>

@@ -32,7 +32,7 @@ h1 {
 .contact-info-card .office-icon {
     margin-right: 15px;
 }
-.article-meta .author-img {
+.author-img {
     width: 50px;
     height: 50px;
     object-fit: cover;
@@ -93,7 +93,7 @@ body.single-post .article-body-content img ~ .wp-caption-text {
 body.single-post .article-body-content .wp-caption {
     width: 100% !important;
 }
-body.single-post .article-body-content > p:first-child::first-letter {
+.body-content > p:first-child::first-letter {
     float: left;
     font-size: 5.5rem;
     line-height: 0.75;
