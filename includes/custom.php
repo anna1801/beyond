@@ -1,6 +1,6 @@
 <?php
 /**
- * Add custom font-weight formats to the WordPress WYSIWYG Editor
+ * Add custom font-weight and button formats to the WordPress WYSIWYG Editor
  */
 function custom_tinymce_font_weight_formats($init_array) {
 
@@ -76,7 +76,20 @@ function custom_tinymce_buttons($buttons) {
 }
 add_filter('mce_buttons', 'custom_tinymce_buttons');
 
+// Related reading shortcode for tinymce editor
+function custom_tinymce_shortcode($buttons) {
+    $buttons[] = 'related_reading_button';
+    return $buttons;
+}
+add_filter('mce_buttons', 'custom_tinymce_shortcode');
+function custom_tinymce_plugins($plugin_array) {
 
+    $plugin_array['related_reading'] =
+        get_template_directory_uri() . '/assets/js/custom.js';
+
+    return $plugin_array;
+}
+add_filter('mce_external_plugins', 'custom_tinymce_plugins');
 
 
 

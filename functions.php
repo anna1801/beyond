@@ -79,5 +79,6 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 // custom functions
   require get_template_directory() . '/includes/custom.php';
   require get_template_directory() . '/includes/nav_walker.php';
+  require get_template_directory() . '/includes/related_reading.php';
 
 ?>
