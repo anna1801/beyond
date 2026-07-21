@@ -91,7 +91,17 @@ function custom_tinymce_plugins($plugin_array) {
 }
 add_filter('mce_external_plugins', 'custom_tinymce_plugins');
 
-
+// hide default user profile picture in admin 
+function hide_avatar_for_author() {
+    ?>
+    <style>
+        .user-profile-picture {
+            display: none !important;
+        }
+    </style>
+    <?php
+}
+add_action( 'admin_head', 'hide_avatar_for_author' );
 
 
 
