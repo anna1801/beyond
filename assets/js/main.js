@@ -336,6 +336,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "telegram":
         shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
         break;
+      case "linkedin":
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
       case "instagram":
         alert("Please share manually on Instagram.");
         return;

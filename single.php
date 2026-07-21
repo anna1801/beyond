@@ -105,40 +105,29 @@
                     <p class="small mb-0 text-muted"><?php echo esc_html($author_bio); ?></p>
                 </div>
             </div>
-
             <div class="share-section d-flex justify-content-between align-items-center">
                 <div class="d-flex gap-3">
                     <?php
                         $post_title = get_the_title();
                         $post_url   = get_permalink();
-                        $post_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
-                        $encoded_title = rawurlencode($post_title);
-                        $encoded_url   = rawurlencode($post_url);
-                        $encoded_image = rawurlencode($post_image);
                     ?>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $encoded_url; ?>" target="_blank" rel="noopener noreferrer" class="text-dark">
-                        <i class="fab fa-facebook-square"></i>
-                    </a>
-                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="text-dark">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://twitter.com/intent/tweet?text=<?php echo $encoded_title; ?>&url=<?php echo $encoded_url; ?>" target="_blank" rel="noopener noreferrer" class="text-dark">
-                        <i class="fab fa-x-twitter"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $encoded_url; ?>" target="_blank" rel="noopener noreferrer" class="text-dark">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://api.whatsapp.com/send?text=<?php echo $encoded_title . '%20' . $encoded_url; ?>" target="_blank" rel="noopener noreferrer" class="text-dark">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://t.me/share/url?url=<?php echo $encoded_url; ?>&text=<?php echo $encoded_title; ?>" target="_blank" rel="noopener noreferrer" class="text-dark">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                    <a href="mailto:?subject=<?php echo $encoded_title; ?>&body=<?php echo rawurlencode($post_title . "\n\n" . $post_url); ?>" class="text-dark">
-                        <i class="fa fa-envelope"></i>
-                    </a>
-                    <a href="#" onclick="copyNewsLink()" class="text-dark"><i class="fas fa-link"></i></a>
-                </div>
+                    <a href="javascript:void(0)" onclick="shareNews('facebook')" class="text-dark"
+                        title="Share on Facebook"><i class="fab fa-facebook-square"></i></a>
+                    <a href="javascript:void(0)" onclick="shareNews('instagram')" class="text-dark"
+                        title="Share on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="javascript:void(0)" onclick="shareNews('x')" class="text-dark"
+                        title="Share on X"><i class="fab fa-x-twitter"></i></a>
+                    <a href="javascript:void(0)" onclick="shareNews('linkedin')" class="text-dark"
+                        title="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="javascript:void(0)" onclick="shareNews('whatsapp')" class="text-dark"
+                        title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="javascript:void(0)" onclick="shareNews('telegram')" class="text-dark"
+                        title="Share on Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="mailto:?subject=<?php echo $post_title; ?>&body=Check out this Article: <?php echo $post_url; ?>"
+                        class="text-dark" title="Email this essay"><i class="fa fa-envelope"></i></a>
+                    <a href="javascript:void(0)" onclick="copyNewsLink()" class="text-dark" title="Copy Link"><i
+                            class="fas fa-link"></i></a>
+                </div> 
                 <?php 
                     $article_file = get_field('article_file');
                     if($article_file) :
