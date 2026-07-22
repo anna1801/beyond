@@ -85,5 +85,6 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 
 // Ajax 
   require get_template_directory() . '/ajax/podcasts-ajax.php';  
+  require get_template_directory() . '/ajax/category-ajax.php';
 
 ?>

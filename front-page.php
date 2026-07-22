@@ -398,7 +398,7 @@ get_header();
                                             <?php endif; ?>
                                             <h2 class="display-6 fw-bold mb-3"><a href="<?php echo esc_url($post_permalink); ?>"
                                                     class="text-dark text-decoration-none title-hover-effect"><?php echo esc_html($post_title); ?></a></h2>
-                                            <p class="text-muted mb-3"><?php echo esc_html($post_excerpt); ?></p>
+                                            <p class="text-muted mb-3"><?php echo esc_html(wp_trim_words($post_excerpt, 25, '...')); ?></p>
                                         </div>
                                         <?php
                                     endwhile;
@@ -445,7 +445,7 @@ get_header();
                                                     <span class="text-uppercase small d-block mb-2 category_color"><?php echo esc_html($topic[0]->name); ?></span>
                                                 <?php endif; ?>
                                                 <h4 class="h5 fw-bold mb-2"><a href="<?php echo esc_url($post_permalink); ?>" class="text-dark text-decoration-none title-hover-effect"><?php echo esc_html($post_title); ?></a></h4>
-                                                <p class="text-muted"><?php echo esc_html($post_excerpt); ?></p>
+                                                <p class="text-muted"><?php echo esc_html(wp_trim_words($post_excerpt, 15, '...')); ?></p>
                                             </div>
                                             <?php
                                         endwhile;

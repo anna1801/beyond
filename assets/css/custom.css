@@ -109,3 +109,8 @@ body.single-post .article-body-content .wp-caption {
     object-fit: cover;
     object-position: center;
 }
+.term-box .img-fluid {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: center;
+}
