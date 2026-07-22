@@ -109,10 +109,19 @@
             ?> 
         </div>
     </div>
-    <div class="text-center mt-5">
-        <a href="podcast-category.html"
-            class="btn btn-outline-dark rounded-pill px-5 py-2 text-uppercase ls-1">All Episodes</a>
-    </div>
+
+    <?php
+        $template_page = get_pages(array(
+            'meta_key'   => '_wp_page_template',
+            'meta_value' => 'template/template-podcasts.php',
+        ));
+        if (!empty($template_page)) {
+            $template_url = get_permalink($template_page[0]->ID);
+
+            echo '<div class="text-center mt-5"><a href="' . esc_url($template_url) . '" class="btn btn-outline-dark rounded-pill px-5 py-2 text-uppercase ls-1">All Episodes</a> </div>';
+        }
+    ?>
+    
 </section>
 
 <?php get_footer(); ?>
