@@ -183,9 +183,14 @@
             ?> 
         </div>
     </div>
-    <div class="text-center mt-5">
-        <button class="btn btn-outline-dark rounded-pill px-5 py-2 text-uppercase ls-1">Load More</button>
-    </div>
+
+    <?php 
+        $posts_page_id = get_option( 'page_for_posts' );
+        if ( $posts_page_id ) {
+            echo '<div class="text-center mt-5"> <a href="' . esc_url( get_permalink( $posts_page_id ) ) . '" class="btn btn-outline-dark rounded-pill px-5 py-2 text-uppercase ls-1">Load More</a> </div>';
+        }
+    ?>  
+    
 </section>
 
 <?php get_footer(); ?>

@@ -104,5 +104,36 @@ function hide_avatar_for_author() {
 add_action( 'admin_head', 'hide_avatar_for_author' );
 
 
+//Allow a page template to be used only once.
+function restrict_page_templates_to_one_page( $templates ) {
+
+    $restricted_templates = array(
+        'template/template-about.php',
+        'template/template-contact.php',
+        'template/template-podcasts.php',
+        'template/template-videos.php',
+    );
+
+    foreach ( $restricted_templates as $template_file ) {
+
+        $used_pages = get_posts( array(
+            'post_type'      => 'page',
+            'posts_per_page' => 1,
+            'post__not_in'   => array( get_the_ID() ),
+            'meta_key'       => '_wp_page_template',
+            'meta_value'     => $template_file,
+            'fields'         => 'ids',
+        ) );
+
+        if ( ! empty( $used_pages ) ) {
+            unset( $templates[ $template_file ] );
+        }
+    }
+
+    return $templates;
+}
+
+add_filter( 'theme_page_templates', 'restrict_page_templates_to_one_page');
+
 
 ?>
